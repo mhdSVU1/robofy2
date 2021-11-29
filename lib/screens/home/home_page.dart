@@ -43,6 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
           return false;
         } else {
           authController.signOut();
+          /*// To just exit the app
+           if (Platform.isAndroid) {
+            SystemNavigator.pop();
+          } else if (Platform.isIOS) {
+            exit(0);
+          }      */
           return true;
         }
       },
