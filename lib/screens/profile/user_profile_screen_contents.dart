@@ -141,7 +141,7 @@ class _UserProfileContentsState extends State<UserProfileContents> {
               newPhoneNumber)
           .then((value) {
         dismissLoading();
-        Get.snackbar("Successful", "Your new password has been saved!");
+        Get.snackbar("Successful", "Your account information has been updated!");
         print("updatePassword :Successful");
       }).catchError((error) {
         print("updatePassword :error ${error.toString()}");
