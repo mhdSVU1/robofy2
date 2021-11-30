@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void initializeMessaging() {
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      print("message recieved");
+      print("message received");
       print(event.notification.body);
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
