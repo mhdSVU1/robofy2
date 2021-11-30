@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fire_trips/controllers/app_controller.dart';
 import 'package:flutter_fire_trips/controllers/auth_controller.dart';
+import 'package:flutter_fire_trips/screens/authentication/auth_screen.dart';
 import 'package:get/get.dart';
 
 import 'Constants/firebase_initialization.dart';
@@ -46,15 +47,7 @@ class MyApp extends StatelessWidget {
             appBarTheme: AppBarTheme(
               color: const Color(0xFF947CE3),
             )),
-        home: Splash());
+        home: AuthenticationScreen());
   }
 }
 
-class Splash extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: CircularProgressIndicator()),
-    );
-  }
-}

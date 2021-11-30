@@ -75,8 +75,7 @@ class _UserProfileContentsState extends State<UserProfileContents> {
                   controller: controller_phoneNumber,
                   onChanged: (value) {
                     setState(() {
-                      newPhoneNumber =
-                          value ?? authController.modelUser.value.phoneNumber;
+                      newPhoneNumber = value;
                     });
                   },
                 );
@@ -105,7 +104,6 @@ class _UserProfileContentsState extends State<UserProfileContents> {
                   onPress: () {
                     Get.to(() => HomeScreen());
                     Get.snackbar("Canceled!", "Profile Editing Canceled!");
-
                   },
                   widthFactor: 0.4,
                   heightFactor: 0.07,
@@ -130,39 +128,40 @@ class _UserProfileContentsState extends State<UserProfileContents> {
     authController.currentUser.value
         .reauthenticateWithCredential(cred)
         .then((value) {
-
       authController.currentUser.value.updatePassword(newPassword).then((_) {
-      //Success, do something
-      authController
-          .saveUserProfileDataToDB(
-              authController.currentUser.value,
-              authController.currentUser.value.email,
-              authController.currentUser.value.displayName,
-              newPhoneNumber)
-          .then((value) {
-        dismissLoading();
-        Get.snackbar("Successful", "Your account information has been updated!");
-        print("updatePassword :Successful");
+        //Success, do something
+        authController
+            .saveUserProfileDataToDB(
+                authController.currentUser.value,
+                authController.currentUser.value.email,
+                authController.currentUser.value.displayName,
+                newPhoneNumber)
+            .then((value) {
+          dismissLoading();
+          Get.snackbar(
+              "Successful", "Your account information has been updated!");
+          print("updatePassword :Successful");
+        }).catchError((error) {
+          print("updatePassword :error ${error.toString()}");
+        });
       }).catchError((error) {
+        //Error, show something
+        dismissLoading();
+        controller_phoneNumber.text =
+            authController.modelUser.value.phoneNumber;
+        newPassword = authController.modelUser.value.phoneNumber;
+
+        Get.snackbar("Phone Number Error",
+            'Because you are using phone number as a password, ${error.toString().split(']')[1]}');
+
         print("updatePassword :error ${error.toString()}");
       });
-    }).catchError((error) {
-      //Error, show something
-        dismissLoading();
-        controller_phoneNumber.text = authController.modelUser.value.phoneNumber;
-       newPassword = authController.modelUser.value.phoneNumber;
-
-        Get.snackbar("Phone Number Error", 'Because you are using phone number as a password, ${error.toString().split(']')[1]}');
-
-      print("updatePassword :error ${error.toString()}");
-    });
-    }).catchError((error) {
-
+    }); /*.catchError((error) {
+      dismissLoading();
       print("reauth :error ${error.toString()}");
-      // Get.snackbar("Password Error", '${error.toString().split(']')[1]}');
+       Get.snackbar("Password Error", '${error.toString().split(']')[1]}');
 
 
-    });
-
+    });*/
   }
 }
